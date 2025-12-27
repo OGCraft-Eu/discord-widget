@@ -6,8 +6,12 @@ export default async function Home() {
       <main className="flex w-full max-w-4xl flex-col items-center gap-8 py-24 px-6">
         <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">OG Craft - Discord Widget</h1>
         <div className="w-full">
-          <DiscordWidget guildId="1444100565687603333" />
-        </div>
+          <DiscordWidget
+            guildId="1444100565687603333"
+            type="full"
+            color="#1FBADF"
+          /> 
+       </div>
       </main>
     </div>
   );
