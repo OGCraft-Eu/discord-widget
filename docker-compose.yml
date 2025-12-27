@@ -5,15 +5,12 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    container_name: homepage
+    container_name: discord-widget
     ports:
       - '3000:3000'
     networks:
-      - norisk-network
       - shared
 
 networks:
-  norisk-network:
-    driver: bridge
   shared:
     external: true
