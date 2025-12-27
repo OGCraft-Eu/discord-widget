@@ -8,16 +8,17 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Missing guild id" }, { status: 400 });
   }
 
-  const token = process.env.DISCORD_BOT_TOKEN ?? "";
-  const censoredToken = token ? `${token.slice(0, 4)}...${token.slice(-4)}` : "(missing)";
-  console.log(`Using Authorization: Bot ${censoredToken}`);
-
-  const res = await fetch(`https://discord.com/api/v10/guilds/${guildId}`, {
-    headers: {
-      Authorization: `Bot ${token}`,
-    },
-    next: { revalidate: 1800 },
-  });
+  const token = process.env.DISCORD_BOT_TOKEN;
+  
+  const res = await fetch(
+    `https://discord.com/api/v10/guilds/${guildId}?with_counts=true`,
+    {
+      headers: {
+        Authorization: `Bot ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     return NextResponse.json({ error: "Discord error" }, { status: res.status });
@@ -29,5 +30,7 @@ export async function GET(req: Request) {
     name: guild.name,
     icon: guild.icon,
     banner: guild.banner,
+    total: guild.approximate_member_count,
+    online: guild.approximate_presence_count,
   });
 }

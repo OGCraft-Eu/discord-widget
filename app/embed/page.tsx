@@ -1,27 +1,23 @@
 import DiscordWidget from "@/components/discord-widget";
 
-export const dynamic = "force-dynamic";
-
-type EmbedPageProps = {
+export default async function Embed({
+  searchParams,
+}: {
   searchParams: Promise<{
     guild?: string;
-    type?: "small" | "full";
+    type?: string;
     color?: string;
   }>;
-};
-
-export default async function Embed({ searchParams }: EmbedPageProps) {
+}) {
   const params = await searchParams;
 
-  if (!params.guild) return null;
-
   return (
-    <div className="flex items-center justify-center p-4">
-      <DiscordWidget
-        guildId={params.guild}
-        type={params.type === "small" ? "small" : "full"}
-        color={params.color}
-      />
+    <div className="min-h-screen bg-transparent">
+    <DiscordWidget
+      guildId={params.guild ?? "1444100565687603333"}
+      type={params.type === "small" ? "small" : "full"}
+      color={params.color ?? "#1FBADF"}
+    />
     </div>
   );
 }

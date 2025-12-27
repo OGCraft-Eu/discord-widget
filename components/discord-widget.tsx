@@ -22,6 +22,8 @@ type GuildMeta = {
   name?: string;
   icon?: string | null;
   banner?: string | null;
+  total?: number;
+  online?: number;
 };
 
 function iconUrl(guildId: string, icon?: string | null) {
@@ -61,7 +63,8 @@ export default async function DiscordWidget({
 
   const members = widget.members ?? [];
   const online = widget.presence_count ?? members.length;
-  const offline = Math.max(0, members.length - online);
+const total = meta?.total ?? online;
+const offline = Math.max(0, total - online);
 
   const name = meta?.name ?? widget.name;
   const icon = iconUrl(guildId, meta?.icon);
