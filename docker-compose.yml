@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  discord-widget:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: homepage
+    ports:
+      - '3000:3000'
+    networks:
+      - norisk-network
+      - shared
+
+networks:
+  norisk-network:
+    driver: bridge
+  shared:
+    external: true
